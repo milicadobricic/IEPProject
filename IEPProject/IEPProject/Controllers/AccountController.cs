@@ -151,7 +151,7 @@ namespace IEPProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { LastName = model.LastName, FirstName = model.FirstName, UserName = model.Username, Email = model.Email, NumTokens = 0 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
