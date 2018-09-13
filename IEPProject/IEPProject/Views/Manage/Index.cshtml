@@ -10,6 +10,22 @@
     <h4>Change your account settings</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>First name:</dt>
+        <dd>
+            @Model.FirstName
+        </dd>
+        <dt>Last name:</dt>
+        <dd>
+            @Model.LastName
+        </dd>
+        <dt>E-mail:</dt>
+        <dd>
+            @Model.Email
+        </dd>
+        <dt>Username:</dt>
+        <dd>
+            @Model.Username
+        </dd>
         <dt>Password:</dt>
         <dd>
             [
@@ -81,4 +97,8 @@
                 }*@
         </dd>
     </dl>
+    <br />
+    <p>
+        @Html.ActionLink("Change user information", "Change", new { area = "" }, new { @class = "btn btn-default" })
+    </p>
 </div>

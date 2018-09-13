@@ -64,8 +64,13 @@ namespace IEPProject.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+            var user = await UserManager.FindByIdAsync(userId);
             var model = new IndexViewModel
             {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Username = user.UserName,
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
@@ -240,6 +245,44 @@ namespace IEPProject.Controllers
             }
             AddErrors(result);
             return View(model);
+        }
+
+        //
+        // GET: /Manage/Change
+        public ActionResult Change()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Change(ChangeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                if(!string.IsNullOrEmpty(model.FirstName))
+                {
+                    user.FirstName = model.FirstName;
+                }
+                if (!string.IsNullOrEmpty(model.LastName))
+                {
+                    user.LastName = model.LastName;
+                }
+                if (!string.IsNullOrEmpty(model.Email))
+                {
+                    user.Email = model.Email;
+                }
+                if (!string.IsNullOrEmpty(model.Username))
+                {
+                    user.UserName = model.Username;
+                }
+                await UserManager.UpdateAsync(user);
+
+                return RedirectToAction("Index");
+            }
+
+            return View();
         }
 
         //
