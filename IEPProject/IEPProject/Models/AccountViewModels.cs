@@ -49,8 +49,8 @@ namespace IEPProject.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Username")]
-        public string Username { get; set; }
+        [Display(Name = "Username or email")]
+        public string UsernameOrEmail { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

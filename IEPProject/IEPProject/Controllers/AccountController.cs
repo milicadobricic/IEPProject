@@ -75,7 +75,11 @@ namespace IEPProject.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.UsernameOrEmail, model.Password, model.RememberMe, shouldLockout: false);
+            if(result == SignInStatus.Failure)
+            {
+                result = await SignInManager.PasswordEmailSignInAsync(model.UsernameOrEmail, model.Password, model.RememberMe, shouldLockout: false);
+            }
             switch (result)
             {
                 case SignInStatus.Success:
