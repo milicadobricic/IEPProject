@@ -6,7 +6,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E46AEB2B-7081-4D68-9A1F-2188BFAA7D68}</ProjectGuid>
+    <ProjectGuid>{B09E9B9F-6ED7-44FA-B472-EFD5D91D8172}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>IEPProject.Tests</RootNamespace>
@@ -93,7 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IEPProject\IEPProject.csproj">
-      <Project>{E240FBA2-75CC-4D06-A7C3-B36705253438}</Project>
+      <Project>{9B3B2246-2633-459C-AC41-92CD2139C44A}</Project>
       <Name>IEPProject</Name>
     </ProjectReference>
   </ItemGroup>
