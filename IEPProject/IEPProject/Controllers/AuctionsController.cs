@@ -16,7 +16,7 @@ namespace IEPProject.Controllers
 {
     public class AuctionsController : Controller
     {
-        private DbModel db = new DbModel();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Auctions
         public ActionResult Index()

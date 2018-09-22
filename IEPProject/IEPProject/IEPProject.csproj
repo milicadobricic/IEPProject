@@ -203,11 +203,20 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Data_Models\Auctions.cs" />
     <Compile Include="Data_Models\AuctionState.cs" />
+    <Compile Include="Data_Models\Bids.cs" />
     <Compile Include="Data_Models\BidState.cs" />
-    <Compile Include="Data_Models\DbModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809180001269_InitialCreate.cs" />
+    <Compile Include="Migrations\201809180001269_InitialCreate.Designer.cs">
+      <DependentUpon>201809180001269_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809222317493_Change_ApplicationDbContext.cs" />
+    <Compile Include="Migrations\201809222317493_Change_ApplicationDbContext.Designer.cs">
+      <DependentUpon>201809222317493_Change_ApplicationDbContext.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AuctionsViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -294,6 +303,14 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201809180001269_InitialCreate.resx">
+      <DependentUpon>201809180001269_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809222317493_Change_ApplicationDbContext.resx">
+      <DependentUpon>201809222317493_Change_ApplicationDbContext.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

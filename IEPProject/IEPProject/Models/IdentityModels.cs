@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using IEPProject.Data_Models;
 
 namespace IEPProject.Models
 {
@@ -32,5 +33,8 @@ namespace IEPProject.Models
         {
             return new ApplicationDbContext();
         }
+
+        public virtual DbSet<Auction> Auctions { get; set; }
+        public virtual DbSet<Bid> Bids { get; set; }
     }
 }
