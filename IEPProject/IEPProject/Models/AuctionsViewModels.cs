@@ -18,9 +18,11 @@ namespace IEPProject.Models
         public HttpPostedFileBase UploadedPhoto { get; set; }
 
         [Required]
+        [Display(Name = "Duration")]
         public int Duration { get; set; }
 
         [Required]
+        [Display(Name = "Start price")]
         public double StartPrice { get; set; }
     }
 }
