@@ -1,14 +1,32 @@
-﻿using System;
+﻿using IEPProject.Models;
+using IEPProject.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace IEPProject.Data_Models
 {
     public class Auction
     {
+        public Auction(){}
+
+        public Auction(CreateAuction auction, string imagePath)
+        {
+            Name = auction.Name;
+            ImagePath = imagePath;
+            Duration = auction.Duration;
+            StartPrice = auction.StartPrice;
+            CurrentPrice = 0;
+            CreationTime = DateTime.Now;
+            State = AuctionState.READY;
+        }
+
         [Key]
         public int Id { get; set; }
 

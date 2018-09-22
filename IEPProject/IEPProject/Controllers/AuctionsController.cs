@@ -7,6 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using IEPProject.Data_Models;
+using IEPProject.Models;
+using System.IO;
+using IEPProject.Utilities;
 
 namespace IEPProject.Controllers
 {
@@ -46,11 +49,15 @@ namespace IEPProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,ImagePath,Duration,StartPrice,CurrentPrice,CreationTime,OpeningTime,ClosingTime,State")] Auction auction)
+        public ActionResult Create(CreateAuction auction)
         {
             if (ModelState.IsValid)
             {
-                db.Auctions.Add(auction);
+                var path = Path.Combine(Server.MapPath("~/App_Data"), FileNameGenerator.generate());
+                Auction auctionModel = new Auction(auction, path);
+                auction.UploadedPhoto.SaveAs(path);
+
+                db.Auctions.Add(auctionModel);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
