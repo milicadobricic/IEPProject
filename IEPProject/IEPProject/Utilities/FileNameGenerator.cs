@@ -11,7 +11,7 @@ namespace IEPProject.Utilities
 
         public static string generate()
         {
-            return string.Concat("file_", (++counter).ToString(), ".txt");
+            return string.Concat("file_", (++counter).ToString());
         }
     }
 }

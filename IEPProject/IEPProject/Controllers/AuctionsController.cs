@@ -10,6 +10,7 @@ using IEPProject.Data_Models;
 using IEPProject.Models;
 using System.IO;
 using IEPProject.Utilities;
+using System.Web.Helpers;
 
 namespace IEPProject.Controllers
 {
@@ -53,9 +54,12 @@ namespace IEPProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                var path = Path.Combine(Server.MapPath("~/App_Data"), FileNameGenerator.generate());
-                Auction auctionModel = new Auction(auction, path);
-                auction.UploadedPhoto.SaveAs(path);
+                var imagePath = string.Concat("~/Images/", FileNameGenerator.generate());
+                var path = Server.MapPath(imagePath);
+                Auction auctionModel = new Auction(auction, string.Concat(imagePath.Substring(1), ".jpeg"));
+                WebImage img = new WebImage(auction.UploadedPhoto.InputStream);
+                img.Resize(256, 256, true, true);
+                img.Save(path);
 
                 db.Auctions.Add(auctionModel);
                 db.SaveChanges();

@@ -203,6 +203,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Data_Models\Auctions.cs" />
     <Compile Include="Data_Models\AuctionState.cs" />
+    <Compile Include="Data_Models\BidState.cs" />
     <Compile Include="Data_Models\DbModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -280,9 +281,11 @@
     <Content Include="Views\Auctions\Edit.cshtml" />
     <Content Include="Views\Auctions\Index.cshtml" />
     <Content Include="Views\Auctions\Create.cshtml" />
+    <Content Include="Views\Auctions\DetailsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
