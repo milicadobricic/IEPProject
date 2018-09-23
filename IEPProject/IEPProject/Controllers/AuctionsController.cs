@@ -140,7 +140,8 @@ namespace IEPProject.Controllers
                 Auction = auction,
                 User = user,
                 Time = DateTime.Now,
-                State = BidState.CURRENTLY_BEST
+                State = BidState.CURRENTLY_BEST,
+                OfferedPrice = model.Price
             };
 
             foreach (var b in db.Bids.Where(b => b.Auction.Id == auction.Id).Where(b => b.State == BidState.CURRENTLY_BEST)) {

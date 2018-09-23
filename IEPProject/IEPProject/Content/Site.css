@@ -22,3 +22,14 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.col-centered{
+    margin: 0 auto;
+    float: none;
+}
+
+.centered{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

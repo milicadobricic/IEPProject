@@ -4,13 +4,13 @@
     ViewBag.Title = "CreateBidPartial";
 }
 
-@using (Html.BeginForm("CreateBid", "Auctions", FormMethod.Post))
+@using (Html.BeginForm("CreateBid", "Auctions", FormMethod.Post, new { @class = "form-inline justify-content-center" }))
 {
     @Html.AntiForgeryToken()
 
     <div>
         <div>
-            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @Value = ViewBag.Price.ToString(), @class = "form-control" } })
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @Value = ViewBag.Price.ToString(), @class = "form-control text-center" } })
             @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
         </div>
     </div>

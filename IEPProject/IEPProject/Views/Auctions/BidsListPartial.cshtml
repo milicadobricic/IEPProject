@@ -1,0 +1,64 @@
+﻿@model IEnumerable<IEPProject.Data_Models.Bid>
+
+<h2>Bids</h2>
+<table class="table">
+    <tr>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.OfferedPrice)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.User.UserName)
+        </th>
+    </tr>
+
+    @foreach (var item in Model.Reverse())
+    {
+        if (item.State == IEPProject.Data_Models.BidState.CURRENTLY_BEST)
+        {
+            <tr class="active">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfferedPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.UserName)
+                </td>
+            </tr>
+        }
+        else if (item.State == IEPProject.Data_Models.BidState.SUCCESSFUL)
+        {
+            <tr class="success">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfferedPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.UserName)
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfferedPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.UserName)
+                </td>
+            </tr>
+        }
+
+    }
+
+</table>

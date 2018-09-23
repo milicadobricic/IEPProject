@@ -216,6 +216,10 @@
     <Compile Include="Migrations\201809222317493_Change_ApplicationDbContext.Designer.cs">
       <DependentUpon>201809222317493_Change_ApplicationDbContext.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809231658474_OfferedPriceAdded.cs" />
+    <Compile Include="Migrations\201809231658474_OfferedPriceAdded.Designer.cs">
+      <DependentUpon>201809231658474_OfferedPriceAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AuctionsViewModels.cs" />
@@ -292,6 +296,7 @@
     <Content Include="Views\Auctions\Create.cshtml" />
     <Content Include="Views\Auctions\DetailsPartial.cshtml" />
     <Content Include="Views\Auctions\CreateBidPartial.cshtml" />
+    <Content Include="Views\Auctions\BidsListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -311,6 +316,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809222317493_Change_ApplicationDbContext.resx">
       <DependentUpon>201809222317493_Change_ApplicationDbContext.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809231658474_OfferedPriceAdded.resx">
+      <DependentUpon>201809231658474_OfferedPriceAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

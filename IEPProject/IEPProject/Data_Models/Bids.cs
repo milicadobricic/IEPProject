@@ -16,8 +16,13 @@ namespace IEPProject.Data_Models
 
         public virtual ApplicationUser User { get; set; }
 
+        [Display(Name = "Bid time")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime Time { get; set; }
 
         public BidState State { get; set; }
+
+        [Display(Name = "Offered price")]
+        public double OfferedPrice { get; set; }
     }
 }
