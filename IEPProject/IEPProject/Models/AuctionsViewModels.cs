@@ -25,4 +25,12 @@ namespace IEPProject.Models
         [Display(Name = "Start price")]
         public double StartPrice { get; set; }
     }
+
+    public class CreateBid
+    {
+        public int AuctionId { get; set; }
+
+        [Display(Name = "Bid price")]
+        public double Price { get; set; }
+    }
 }

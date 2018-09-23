@@ -45,6 +45,7 @@ namespace IEPProject.Data_Models
         public double StartPrice { get; set; }
 
         [Required]
+        [Display(Name = "Current price")]
         public double CurrentPrice { get; set; }
 
         [Required]

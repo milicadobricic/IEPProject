@@ -1,0 +1,26 @@
+﻿@model IEPProject.Models.CreateBid
+
+@{
+    ViewBag.Title = "CreateBidPartial";
+}
+
+@using (Html.BeginForm("CreateBid", "Auctions", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        <div>
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @Value = ViewBag.Price.ToString(), @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @Html.HiddenFor(model => model.AuctionId, new { Value = ViewBag.AuctionId })
+
+    <div>
+        <div>
+            <input type="submit" value="Bid Now" class="btn btn-default" />
+        </div>
+    </div>
+}
+

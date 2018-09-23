@@ -6,6 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using IEPProject.Data_Models;
 using IEPProject.Models;
 using System.IO;
@@ -17,7 +20,7 @@ namespace IEPProject.Controllers
     public class AuctionsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        
         // GET: Auctions
         public ActionResult Index()
         {
@@ -124,6 +127,32 @@ namespace IEPProject.Controllers
             db.Auctions.Remove(auction);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateBid(CreateBid model)
+        {
+            Auction auction = db.Auctions.Find(model.AuctionId);
+            var userId = User.Identity.GetUserId();
+            var user = db.Users.Find(userId);
+            var bid = new Bid
+            {
+                Auction = auction,
+                User = user,
+                Time = DateTime.Now,
+                State = BidState.CURRENTLY_BEST
+            };
+
+            foreach (var b in db.Bids.Where(b => b.Auction.Id == auction.Id).Where(b => b.State == BidState.CURRENTLY_BEST)) {
+                b.State = BidState.UNSUCCESSFUL;
+                db.Entry(b).State = EntityState.Modified;
+            }
+
+            db.Bids.Add(bid);
+            auction.CurrentPrice = model.Price;
+            db.Entry(auction).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Details", new { id = auction.Id });
         }
 
         protected override void Dispose(bool disposing)
