@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IEPProject.Data_Models.Auction>
+﻿@model List<IEPProject.Data_Models.Auction>
 
 @{
     ViewBag.Title = "Index";
@@ -9,73 +9,28 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Duration)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CurrentPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreationTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OpeningTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ClosingTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.State)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImagePath)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Duration)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CurrentPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreationTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OpeningTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ClosingTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.State)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>
+<div class="container text-center">
+    @for(var i = 0; i < Model.Count / 3; i++)
+    {
+        <div class="row">
+            <div class="col-md-4">
+                @Html.Partial("DetailsPartial", Model[i * 3 + 0])
+            </div>
+            <div class="col-md-4">
+                @Html.Partial("DetailsPartial", Model[i * 3 + 1])
+            </div>
+            <div class="col-md-4">
+                @Html.Partial("DetailsPartial", Model[i * 3 + 2])
+            </div>
+        </div>
+    }
+    <div class="row">
+        @for (var i = 0; i < Model.Count % 3; i++)
+        {
+            <div class="col-md-4">
+                @Html.Partial("DetailsPartial", Model[Model.Count - Model.Count % 3 + i])
+            </div>
+        }
+    </div>
+</div>

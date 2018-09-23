@@ -24,6 +24,13 @@
         <div>
         <h4>@Html.DisplayFor(model => model.CurrentPrice)</h4>
         </div>
+        <div>
+            @foreach (var b in Model.Bids.Where(b => b.State == IEPProject.Data_Models.BidState.CURRENTLY_BEST))
+            {
+                <h5>Bid by:</h5>
+                @b.User.UserName
+            }
+        </div>
     }
     else
     {

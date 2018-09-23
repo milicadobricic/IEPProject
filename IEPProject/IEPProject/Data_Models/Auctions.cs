@@ -16,7 +16,7 @@ namespace IEPProject.Data_Models
     {
         public Auction(){}
 
-        public Auction(CreateAuction auction, string imagePath)
+        public Auction(CreateAuction auction, string imagePath, ApplicationUser user)
         {
             Name = auction.Name;
             ImagePath = imagePath;
@@ -25,6 +25,7 @@ namespace IEPProject.Data_Models
             CurrentPrice = 0;
             CreationTime = DateTime.Now;
             State = AuctionState.READY;
+            Creator = user;
         }
 
         [Key]
@@ -61,6 +62,8 @@ namespace IEPProject.Data_Models
 
         [Required]
         public AuctionState State { get; set; }
+
+        public ApplicationUser Creator { get; set; }
 
         public virtual List<Bid> Bids { get; set; } = new List<Bid>();
     }

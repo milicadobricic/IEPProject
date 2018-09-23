@@ -59,7 +59,9 @@ namespace IEPProject.Controllers
             {
                 var imagePath = string.Concat("~/Images/", FileNameGenerator.generate());
                 var path = Server.MapPath(imagePath);
-                Auction auctionModel = new Auction(auction, string.Concat(imagePath.Substring(1), ".jpeg"));
+                var userId = User.Identity.GetUserId();
+                var user = db.Users.Find(userId);
+                Auction auctionModel = new Auction(auction, string.Concat(imagePath.Substring(1), ".jpeg"), user);
                 WebImage img = new WebImage(auction.UploadedPhoto.InputStream);
                 img.Resize(256, 256, true, true);
                 img.Save(path);
@@ -142,6 +144,13 @@ namespace IEPProject.Controllers
 
             var userId = User.Identity.GetUserId();
             var user = db.Users.Find(userId);
+
+            /*if(userId == auction.Creator.Id)
+            {
+                ViewBag.MessageStatus = "You can't participate in your own auction!";
+                return View("Details", auction);
+            }*/
+
             var bid = new Bid
             {
                 Auction = auction,
@@ -152,6 +161,11 @@ namespace IEPProject.Controllers
             };
 
             foreach (var b in db.Bids.Where(b => b.Auction.Id == auction.Id).Where(b => b.State == BidState.CURRENTLY_BEST)) {
+                /*if(b.User.Id == userId)
+                {
+                    ViewBag.MessageStatus = "Your previous offer is currently the biggest!";
+                    return View("Details", auction);
+                }*/
                 b.State = BidState.UNSUCCESSFUL;
                 db.Entry(b).State = EntityState.Modified;
             }

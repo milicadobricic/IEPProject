@@ -220,6 +220,10 @@
     <Compile Include="Migrations\201809231658474_OfferedPriceAdded.Designer.cs">
       <DependentUpon>201809231658474_OfferedPriceAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809232110180_AuctionCreatorAdded.cs" />
+    <Compile Include="Migrations\201809232110180_AuctionCreatorAdded.Designer.cs">
+      <DependentUpon>201809232110180_AuctionCreatorAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AuctionsViewModels.cs" />
@@ -319,6 +323,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809231658474_OfferedPriceAdded.resx">
       <DependentUpon>201809231658474_OfferedPriceAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809232110180_AuctionCreatorAdded.resx">
+      <DependentUpon>201809232110180_AuctionCreatorAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
