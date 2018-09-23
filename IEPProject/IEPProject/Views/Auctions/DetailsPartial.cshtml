@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "DetailsPartial";
     ViewBag.AuctionId = Model.Id;
-    ViewBag.Price = Model.CurrentPrice + 1;
+    ViewBag.Price = Model.CurrentPrice == 0 ? Model.StartPrice : Model.CurrentPrice + 1;
 }
 
 <div>
@@ -16,12 +16,25 @@
     <div>
         <h4>@timeLeft.Hours:@timeLeft.Minutes:@timeLeft.Seconds</h4>
     </div>
-    <div>
+    @if (Model.CurrentPrice != 0)
+    {
+        <div>
         @Html.DisplayNameFor(model => model.CurrentPrice)
-    </div>
-    <div>
+        </div>
+        <div>
         <h4>@Html.DisplayFor(model => model.CurrentPrice)</h4>
-    </div>
+        </div>
+    }
+    else
+    {
+        <h4>No bids yet!</h4>
+        <div>
+            @Html.DisplayNameFor(model => model.StartPrice)
+        </div>
+        <div>
+            <h4>@Html.DisplayFor(model => model.StartPrice)</h4>
+        </div>
+    }
 
     <br />
 

@@ -133,6 +133,13 @@ namespace IEPProject.Controllers
         public ActionResult CreateBid(CreateBid model)
         {
             Auction auction = db.Auctions.Find(model.AuctionId);
+
+            if(model.Price <= auction.CurrentPrice || model.Price < auction.StartPrice)
+            {
+                ViewBag.MessageStatus = "Offered price must be greater than current!";
+                return View("Details", auction);
+            }
+
             var userId = User.Identity.GetUserId();
             var user = db.Users.Find(userId);
             var bid = new Bid

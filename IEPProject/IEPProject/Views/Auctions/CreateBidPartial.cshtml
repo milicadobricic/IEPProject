@@ -12,6 +12,13 @@
         <div>
             @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @Value = ViewBag.Price.ToString(), @class = "form-control text-center" } })
             @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+
+            @if (!string.IsNullOrEmpty(ViewBag.MessageStatus))
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.MessageStatus
+                </div>
+            }
         </div>
     </div>
 
