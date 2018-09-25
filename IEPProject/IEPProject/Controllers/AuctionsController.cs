@@ -186,6 +186,9 @@ namespace IEPProject.Controllers
                     var status = "Your previous offer is currently the biggest!";
                     return RedirectToAction(model.ReturnPage, new { id = auction.Id, messageStatus = status, errorAuction = model.AuctionId });
                 }*/
+
+                b.User.NumTokens += b.OfferedPrice;
+                db.Entry(b.User).State = EntityState.Modified;
                 b.State = BidState.UNSUCCESSFUL;
                 db.Entry(b).State = EntityState.Modified;
             }
@@ -193,6 +196,8 @@ namespace IEPProject.Controllers
             db.Bids.Add(bid);
             auction.CurrentPrice = model.Price;
             db.Entry(auction).State = EntityState.Modified;
+            user.NumTokens -= model.Price;
+            db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Details", new { id = auction.Id });
         }
