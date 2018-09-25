@@ -1,0 +1,32 @@
+﻿@model IEnumerable<IEPProject.Data_Models.Bid>
+
+<h2>Bids won:</h2>
+<table class="table">
+    <tr>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.Auction.Name)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.OfferedPrice)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Auction.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OfferedPrice)
+            </td>
+        </tr>
+    }
+
+</table>

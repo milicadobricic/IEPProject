@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using IEPProject.Data_Models;
 
 namespace IEPProject.Models
 {
@@ -16,6 +17,7 @@ namespace IEPProject.Models
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+        public IEnumerable<Bid> Bids { get; set; }  
     }
 
     public class ChangeViewModel
