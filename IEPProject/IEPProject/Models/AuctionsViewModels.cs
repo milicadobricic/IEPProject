@@ -32,5 +32,7 @@ namespace IEPProject.Models
 
         [Display(Name = "Bid price")]
         public double Price { get; set; }
+
+        public string ReturnPage { get; set; }
     }
 }

@@ -22,18 +22,31 @@ namespace IEPProject.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         
         // GET: Auctions
-        public ActionResult Index()
+        public ActionResult Index(int? id, string messageStatus, int? errorAuction)
         {
+            if(errorAuction != null)
+            {
+                ViewBag.MessageStatus = messageStatus;
+                ViewBag.ErrorAuction = errorAuction;
+            }
+
             return View(db.Auctions.ToList());
         }
 
         // GET: Auctions/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, string messageStatus, int? errorAuction)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            if (errorAuction != null)
+            {
+                ViewBag.MessageStatus = messageStatus;
+                ViewBag.ErrorAuction = errorAuction;
+            }
+
             Auction auction = db.Auctions.Find(id);
             if (auction == null)
             {
@@ -131,6 +144,7 @@ namespace IEPProject.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateBid(CreateBid model)
         {
@@ -138,8 +152,8 @@ namespace IEPProject.Controllers
 
             if(model.Price <= auction.CurrentPrice || model.Price < auction.StartPrice)
             {
-                ViewBag.MessageStatus = "Offered price must be greater than current!";
-                return View("Details", auction);
+                var status = "Offered price must be greater than current!";
+                return RedirectToAction(model.ReturnPage, new { id = auction.Id, messageStatus = status, errorAuction = model.AuctionId });
             }
 
             var userId = User.Identity.GetUserId();
@@ -147,9 +161,15 @@ namespace IEPProject.Controllers
 
             /*if(userId == auction.Creator.Id)
             {
-                ViewBag.MessageStatus = "You can't participate in your own auction!";
-                return View("Details", auction);
+                var status = "You can't participate in your own auction!";
+                return RedirectToAction(model.ReturnPage, new { id = auction.Id, messageStatus = status, errorAuction = model.AuctionId });
             }*/
+
+            if (user.NumTokens < model.Price)
+            {
+                var status = "You don't have enough tokens!";
+                return RedirectToAction(model.ReturnPage, new { id = auction.Id, messageStatus = status, errorAuction = model.AuctionId });
+            }
 
             var bid = new Bid
             {
@@ -163,8 +183,8 @@ namespace IEPProject.Controllers
             foreach (var b in db.Bids.Where(b => b.Auction.Id == auction.Id).Where(b => b.State == BidState.CURRENTLY_BEST)) {
                 /*if(b.User.Id == userId)
                 {
-                    ViewBag.MessageStatus = "Your previous offer is currently the biggest!";
-                    return View("Details", auction);
+                    var status = "Your previous offer is currently the biggest!";
+                    return RedirectToAction(model.ReturnPage, new { id = auction.Id, messageStatus = status, errorAuction = model.AuctionId });
                 }*/
                 b.State = BidState.UNSUCCESSFUL;
                 db.Entry(b).State = EntityState.Modified;

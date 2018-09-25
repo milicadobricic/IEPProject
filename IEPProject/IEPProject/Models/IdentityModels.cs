@@ -12,7 +12,7 @@ namespace IEPProject.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int NumTokens { get; set; }
+        public double NumTokens { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

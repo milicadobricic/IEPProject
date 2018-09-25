@@ -13,7 +13,7 @@
             @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @Value = ViewBag.Price.ToString(), @class = "form-control text-center" } })
             @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
 
-            @if (!string.IsNullOrEmpty(ViewBag.MessageStatus))
+            @if (!string.IsNullOrEmpty(ViewBag.MessageStatus) && ViewBag.AuctionId == ViewBag.ErrorAuction)
             {
                 <div class="alert alert-danger">
                     @ViewBag.MessageStatus
@@ -23,6 +23,7 @@
     </div>
 
     @Html.HiddenFor(model => model.AuctionId, new { Value = ViewBag.AuctionId })
+    @Html.HiddenFor(model => model.ReturnPage, new { Value = ViewBag.ReturnPage })
 
     <div>
         <div>
