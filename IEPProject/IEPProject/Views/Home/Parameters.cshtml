@@ -60,7 +60,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.C, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.C, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.C, new SelectList(ViewBag.Currencies), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.C, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -74,7 +74,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Change currency values", "Currencies")
 </div>
 
 @section Scripts {

@@ -326,6 +326,8 @@
     <Content Include="Views\Auctions\ApprovePartial.cshtml" />
     <Content Include="Views\Auctions\SearchPartial.cshtml" />
     <Content Include="Views\Home\Parameters.cshtml" />
+    <Content Include="Views\Home\Currencies.cshtml" />
+    <Content Include="Views\Home\CurrencyPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

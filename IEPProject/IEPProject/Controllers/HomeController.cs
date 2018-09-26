@@ -34,6 +34,7 @@ namespace IEPProject.Controllers
 
         public ActionResult Parameters()
         {
+            ViewBag.Currencies = db.Currencies.Select(c => c.Name).ToList();
             return View(db.Parameters.First());
         }
 
@@ -44,6 +45,20 @@ namespace IEPProject.Controllers
             db.Entry(model).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Currencies()
+        {
+            return View(db.Currencies.OrderBy(c => c.Name).ToList());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Currencies(Currency model)
+        {
+            db.Entry(model).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Parameters");
         }
     }
 }

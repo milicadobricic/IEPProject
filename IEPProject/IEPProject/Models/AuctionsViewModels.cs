@@ -19,7 +19,7 @@ namespace IEPProject.Models
         public HttpPostedFileBase UploadedPhoto { get; set; }
 
         [Required]
-        [Display(Name = "Duration")]
+        [Display(Name = "Duration in seconds")]
         public int Duration { get; set; }
 
         [Required]

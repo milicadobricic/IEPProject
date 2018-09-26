@@ -96,7 +96,9 @@ namespace IEPProject.Controllers
         // GET: Auctions/Create
         public ActionResult Create()
         {
-            return View();
+            var parameters = db.Parameters.First();
+            var model = new CreateAuction { Duration = parameters.D };
+            return View(model);
         }
 
         // POST: Auctions/Create

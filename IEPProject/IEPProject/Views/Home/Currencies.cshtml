@@ -1,0 +1,33 @@
+﻿@model IEnumerable<IEPProject.Data_Models.Currency>
+
+@{
+    ViewBag.Title = "Currencies";
+}
+
+<h2>Currencies</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <h4>
+                @Html.DisplayNameFor(model => model.Name)
+            </h4>
+        </div>
+        <div class="col-md-5">
+            <h4>
+                @Html.DisplayNameFor(model => model.Value)
+            </h4>
+        </div>
+        <div class="col-md-2">
+
+        </div>
+    </div>
+
+    <hr />
+
+    @foreach (var item in Model)
+    {
+        @Html.Partial("CurrencyPartial", item)
+    }
+</div>
+
