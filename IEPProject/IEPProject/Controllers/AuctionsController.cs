@@ -14,6 +14,7 @@ using IEPProject.Models;
 using System.IO;
 using IEPProject.Utilities;
 using System.Web.Helpers;
+using LinqKit;
 
 namespace IEPProject.Controllers
 {
@@ -31,6 +32,43 @@ namespace IEPProject.Controllers
             }
 
             return View(db.Auctions.Where(a => a.State == AuctionState.OPENED).ToList());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(SearchAuctions model)
+        {
+            IQueryable<Auction> ret = db.Auctions;
+
+            if (!string.IsNullOrWhiteSpace(model.Query))
+            {
+                var parts = model.Query.Split(new[] { ' ', ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                var predicate = PredicateBuilder.New<Auction>(false);
+                foreach(var part in parts)
+                {
+                    predicate = predicate.Or(p => p.Name.Contains(part));
+                }
+
+                ret = ret.Where(predicate);
+                //ret = ret.Where(a => a.Name.Contains(model.Query));
+            }
+            
+            if(model.MinPrice != null)
+            {
+                ret = ret.Where(a => a.CurrentPrice >= model.MinPrice);
+            }
+
+            if (model.MaxPrice != null)
+            {
+                ret = ret.Where(a => a.CurrentPrice <= model.MaxPrice);
+            }
+
+            if (model.State != null)
+            {
+                ret = ret.Where(a => a.State == model.State);
+            }
+
+            return View(ret.ToList());
         }
 
         // GET: Auctions/Details/5

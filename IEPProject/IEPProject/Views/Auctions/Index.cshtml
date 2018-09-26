@@ -11,6 +11,11 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
+@{ 
+    var m = new IEPProject.Models.SearchAuctions();
+}
+@Html.Partial("SearchPartial", m)
+
 <div class="container text-center">
     @for(var i = 0; i < Model.Count / 3; i++)
     {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IEPProject.Data_Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -39,5 +40,20 @@ namespace IEPProject.Models
     public class ApproveAuction
     {
         public int AuctionId { get; set; }
+    }
+
+    public class SearchAuctions
+    {
+        [Display(Name = "Search query")]
+        public string Query { get; set; }
+
+        [Display(Name = "Minimum price")]
+        public double? MinPrice { get; set; }
+
+        [Display(Name = "Maximum price")]
+        public double? MaxPrice { get; set; }
+
+        [Display(Name = "State")]
+        public AuctionState? State { get; set; }
     }
 }
