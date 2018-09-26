@@ -45,11 +45,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="LinqKit, Version=1.1.15.0, Culture=neutral, PublicKeyToken=bc217f8844052a91, processorArchitecture=MSIL">
@@ -211,6 +211,8 @@
     <Compile Include="Data_Models\AuctionState.cs" />
     <Compile Include="Data_Models\Bids.cs" />
     <Compile Include="Data_Models\BidState.cs" />
+    <Compile Include="Data_Models\Currencies.cs" />
+    <Compile Include="Data_Models\PortalParameters.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -233,6 +235,14 @@
     <Compile Include="Migrations\201809251847433_TokensTypeDouble.cs" />
     <Compile Include="Migrations\201809251847433_TokensTypeDouble.Designer.cs">
       <DependentUpon>201809251847433_TokensTypeDouble.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809262014205_Currencies.cs" />
+    <Compile Include="Migrations\201809262014205_Currencies.Designer.cs">
+      <DependentUpon>201809262014205_Currencies.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809262040246_PortalParameters.cs" />
+    <Compile Include="Migrations\201809262040246_PortalParameters.Designer.cs">
+      <DependentUpon>201809262040246_PortalParameters.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -315,6 +325,7 @@
     <Content Include="Views\Auctions\Approve.cshtml" />
     <Content Include="Views\Auctions\ApprovePartial.cshtml" />
     <Content Include="Views\Auctions\SearchPartial.cshtml" />
+    <Content Include="Views\Home\Parameters.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -343,6 +354,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809251847433_TokensTypeDouble.resx">
       <DependentUpon>201809251847433_TokensTypeDouble.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809262014205_Currencies.resx">
+      <DependentUpon>201809262014205_Currencies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809262040246_PortalParameters.resx">
+      <DependentUpon>201809262040246_PortalParameters.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
