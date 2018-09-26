@@ -35,4 +35,9 @@ namespace IEPProject.Models
 
         public string ReturnPage { get; set; }
     }
+
+    public class ApproveAuction
+    {
+        public int AuctionId { get; set; }
+    }
 }

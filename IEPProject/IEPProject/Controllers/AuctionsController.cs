@@ -30,7 +30,7 @@ namespace IEPProject.Controllers
                 ViewBag.ErrorAuction = errorAuction;
             }
 
-            return View(db.Auctions.ToList());
+            return View(db.Auctions.Where(a => a.State == AuctionState.OPENED).ToList());
         }
 
         // GET: Auctions/Details/5
@@ -200,6 +200,26 @@ namespace IEPProject.Controllers
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Details", new { id = auction.Id });
+        }
+
+        public ActionResult Approve()
+        {
+            return View(db.Auctions.Where(a => a.State == AuctionState.READY).ToList());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Approve(ApproveAuction model)
+        {
+            var auction = db.Auctions.Find(model.AuctionId);
+            auction.State = AuctionState.OPENED;
+            var now = DateTime.Now;
+            auction.OpeningTime = now;
+            auction.ClosingTime = now.AddSeconds(auction.Duration);
+            db.Entry(auction).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return Redirect("Approve");
         }
 
         protected override void Dispose(bool disposing)

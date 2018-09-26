@@ -306,6 +306,8 @@
     <Content Include="Views\Auctions\CreateBidPartial.cshtml" />
     <Content Include="Views\Auctions\BidsListPartial.cshtml" />
     <Content Include="Views\Manage\SuccessfulBidsPartial.cshtml" />
+    <Content Include="Views\Auctions\Approve.cshtml" />
+    <Content Include="Views\Auctions\ApprovePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

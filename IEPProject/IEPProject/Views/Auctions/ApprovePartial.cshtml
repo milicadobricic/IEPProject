@@ -1,0 +1,10 @@
+﻿@model IEPProject.Models.ApproveAuction
+
+@using (Html.BeginForm("Approve", "Auctions", FormMethod.Post, new { @class = "form-inline justify-content-center" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.AuctionId, new { Value = ViewBag.AuctionId })
+
+    <input type="submit" value="Approve" class="btn btn-default" />
+}
