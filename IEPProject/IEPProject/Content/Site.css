@@ -23,13 +23,25 @@ textarea {
     max-width: 280px;
 }
 
-.col-centered{
+.col-centered {
     margin: 0 auto;
     float: none;
 }
 
-.centered{
+.centered {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.silver-background {
+    background-color:#c0c0c0;
+}
+
+.gold-background {
+    background-color:#ffd700;
+}
+
+.platinum-background {
+    background-color:#e5e4e2;
 }

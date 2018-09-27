@@ -78,7 +78,8 @@ namespace IEPProject.Controllers
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
-                Bids = db.Bids.Where(b => b.User.Id == userId).Where(b => b.State == BidState.SUCCESSFUL).ToList()
+                Bids = db.Bids.Where(b => b.User.Id == userId).Where(b => b.State == BidState.SUCCESSFUL).ToList(),
+                NumTokens = user.NumTokens
             };
             return View(model);
         }

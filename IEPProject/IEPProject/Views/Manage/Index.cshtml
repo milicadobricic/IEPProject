@@ -27,6 +27,10 @@
             <dd>
                 @Model.Username
             </dd>
+            <dt>Tokens:</dt>
+            <dd>
+                @Model.NumTokens
+            </dd>
             <dt>Password:</dt>
             <dd>
                 [
@@ -42,6 +46,19 @@
             </dd>
         </dl>
         <br />
+
+        <div>
+            @Html.ActionLink("Buy silver package!", "Index", new { }, new { @class = "btn btn-default silver-background" })
+        </div>
+        <br />
+        <div>
+            @Html.ActionLink("Buy gold package!", "Index", new { }, new { @class = "btn btn-default gold-background" })
+        </div>
+        <br />
+        <div>
+            @Html.ActionLink("Buy platinum package!", "Index", new { }, new { @class = "btn btn-default platinum-background" })
+        </div>
+        <hr />
         <p>
             @Html.ActionLink("Change user information", "Change", new { area = "" }, new { @class = "btn btn-default" })
         </p>

@@ -18,6 +18,7 @@ namespace IEPProject.Models
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
         public IEnumerable<Bid> Bids { get; set; }  
+        public double NumTokens { get; set; }
     }
 
     public class ChangeViewModel
