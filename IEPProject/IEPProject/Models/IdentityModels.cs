@@ -40,5 +40,6 @@ namespace IEPProject.Models
         public virtual DbSet<Bid> Bids { get; set; }
         public virtual DbSet<Currency> Currencies { get; set; }
         public virtual DbSet<PortalParameters> Parameters { get; set; }
+        public virtual DbSet<Order> Orders { get; set; } 
     }
 }

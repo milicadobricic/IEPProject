@@ -1,4 +1,6 @@
-﻿@model IEPProject.Models.IndexViewModel
+﻿@using IEPProject.Data_Models;
+
+@model IEPProject.Models.IndexViewModel
 @{
     ViewBag.Title = "Manage";
 }
@@ -48,15 +50,15 @@
         <br />
 
         <div>
-            @Html.ActionLink("Buy silver package!", "Index", new { }, new { @class = "btn btn-default silver-background" })
+            @Html.ActionLink("Buy silver package!", "BuyTokens", new { type = PackageType.SILVER }, new { @class = "btn btn-default silver-background" })
         </div>
         <br />
         <div>
-            @Html.ActionLink("Buy gold package!", "Index", new { }, new { @class = "btn btn-default gold-background" })
+            @Html.ActionLink("Buy gold package!", "BuyTokens", new { type = PackageType.GOLD }, new { @class = "btn btn-default gold-background" })
         </div>
         <br />
         <div>
-            @Html.ActionLink("Buy platinum package!", "Index", new { }, new { @class = "btn btn-default platinum-background" })
+            @Html.ActionLink("Buy platinum package!", "BuyTokens", new { type = PackageType.PLATINUM }, new { @class = "btn btn-default platinum-background" })
         </div>
         <hr />
         <p>

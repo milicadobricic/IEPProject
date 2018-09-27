@@ -8,6 +8,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using IEPProject.Models;
 using IEPProject.Data_Models;
+using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace IEPProject.Controllers
 {
@@ -367,6 +369,42 @@ namespace IEPProject.Controllers
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
+        public ActionResult BuyTokens(PackageType type)
+        {
+            var userId = User.Identity.GetUserId();
+            var user = db.Users.Find(userId);
+            var numTokens = 0;
+            var parameters = db.Parameters.First();
+
+            switch(type)
+            {
+                case PackageType.SILVER:
+                    numTokens = parameters.S;
+                    break;
+                case PackageType.GOLD:
+                    numTokens = parameters.G;
+                    break;
+                case PackageType.PLATINUM:
+                    numTokens = parameters.P;
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            var order = new Order
+            {
+                User = user,
+                NumTokens = numTokens,
+                State = OrderState.SUBMITTED,
+                SubmittionTime = DateTime.Now
+            };
+
+            order = db.Orders.Add(order);
+            db.SaveChanges();
+
+            return Redirect(GenerateCentiliUrl(type, order.Id));
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)
@@ -381,6 +419,18 @@ namespace IEPProject.Controllers
 #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
+
+        private static readonly Dictionary<PackageType, string> ApiKeys = new Dictionary<PackageType, string>()
+        {
+            { PackageType.SILVER, "34eedb1bdfd83930bc6094e98d9d65e8" },
+            { PackageType.GOLD, "34eedb1bdfd83930bc6094e98d9d65e8" },
+            { PackageType.PLATINUM, "34eedb1bdfd83930bc6094e98d9d65e8" }
+        };
+
+        private static string GenerateCentiliUrl(PackageType type, int orderId)
+        {
+            return string.Concat("https://stage.centili.com/widget/WidgetModule?api=", ApiKeys[type], "&clientid=", orderId);
+        }
 
         private IAuthenticationManager AuthenticationManager
         {

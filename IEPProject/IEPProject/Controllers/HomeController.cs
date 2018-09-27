@@ -6,6 +6,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 
 namespace IEPProject.Controllers
 {
@@ -59,6 +62,29 @@ namespace IEPProject.Controllers
             db.Entry(model).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Parameters");
+        }
+
+        public ActionResult CentiliCallback(int clientid, string status)
+        {
+            var userId = User.Identity.GetUserId();
+            var user = db.Users.Find(userId);
+            var order = db.Orders.Find(clientid);
+            if (status == "success")
+            {
+                order.State = OrderState.COMPLETED;
+                db.Entry(order).State = EntityState.Modified;
+                user.NumTokens += order.NumTokens;
+                db.Entry(user).State = EntityState.Modified;
+            }
+            else
+            {
+                order.State = OrderState.CANCELED;
+                db.Entry(order).State = EntityState.Modified;
+            }
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Manage");
         }
     }
 }
