@@ -190,9 +190,10 @@ namespace IEPProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateBid(CreateBid model)
         {
+
             Auction auction = db.Auctions.Find(model.AuctionId);
 
-            if(model.Price <= auction.CurrentPrice || model.Price < auction.StartPrice)
+            if (model.Price <= auction.CurrentPrice || model.Price < auction.StartPrice)
             {
                 var status = "Offered price must be greater than current!";
                 return RedirectToAction(model.ReturnPage, new { id = auction.Id, messageStatus = status, errorAuction = model.AuctionId });
@@ -200,6 +201,8 @@ namespace IEPProject.Controllers
 
             var userId = User.Identity.GetUserId();
             var user = db.Users.Find(userId);
+            var previous = db.Bids.Where(b => b.Auction.Id == auction.Id).Where(b => b.State == BidState.CURRENTLY_BEST).FirstOrDefault();
+            var previousUser = previous?.User;
 
             /*if(userId == auction.Creator.Id)
             {
@@ -222,17 +225,18 @@ namespace IEPProject.Controllers
                 OfferedPrice = model.Price
             };
 
-            foreach (var b in db.Bids.Where(b => b.Auction.Id == auction.Id).Where(b => b.State == BidState.CURRENTLY_BEST)) {
-                /*if(b.User.Id == userId)
+            if (previous != null)
+            {
+                /*if(previousUser.Id == userId)
                 {
                     var status = "Your previous offer is currently the biggest!";
                     return RedirectToAction(model.ReturnPage, new { id = auction.Id, messageStatus = status, errorAuction = model.AuctionId });
                 }*/
 
-                b.User.NumTokens += b.OfferedPrice;
-                db.Entry(b.User).State = EntityState.Modified;
-                b.State = BidState.UNSUCCESSFUL;
-                db.Entry(b).State = EntityState.Modified;
+                previousUser.NumTokens += previous.OfferedPrice;
+                db.Entry(previousUser).State = EntityState.Modified;
+                previous.State = BidState.UNSUCCESSFUL;
+                db.Entry(previous).State = EntityState.Modified;
             }
 
             db.Bids.Add(bid);

@@ -17,7 +17,7 @@
     </div>
     @if (Model.CurrentPrice != 0)
     {
-        <div>
+        <div id="current_price_name_@Model.Id">
         @Html.DisplayNameFor(model => model.CurrentPrice)
         </div>
         <div>
@@ -26,18 +26,20 @@
         <div>
             @foreach (var b in Model.Bids.Where(b => b.State == IEPProject.Data_Models.BidState.CURRENTLY_BEST))
             {
-                <h5>Bid by:</h5>
+                <h5 id="bid_by_@Model.Id">Bid by:</h5>
                 <div id="current_user_@Model.Id">@b.User.UserName</div>
             }
         </div>
     }
     else
     {
-        <h4>No bids yet!</h4>
-        <div>
-            @Html.DisplayNameFor(model => model.StartPrice)
+        <div id="current_price_name_@Model.Id">
         </div>
-        <div>
+        <h4 id="current_price_@Model.Id">No bids yet!</h4>
+        <h5 id="bid_by_@Model.Id">
+            @Html.DisplayNameFor(model => model.StartPrice)
+        </h5>
+        <div id="current_user_@Model.Id">
             <h4>@Html.DisplayFor(model => model.StartPrice)</h4>
         </div>
     }

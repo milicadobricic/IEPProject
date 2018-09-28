@@ -55,7 +55,18 @@
             var chat = $.connection.priceChangeHub;
             // Create a function that the hub can call back to display messages.
             chat.client.updatePrice = function (auctionId, price, username) {
-                document.getElementById('current_price_' + auctionId).innerHTML = price;
+                var currentPrice = document.getElementById('current_price_' + auctionId);
+                var inputPrice = document.getElementById('input_price_' + auctionId);
+                var currentUser = document.getElementById('current_user_' + auctionId);
+                var currentPriceName = document.getElementById('current_price_name_' + auctionId);
+                var bidBy = document.getElementById('bid_by_' + auctionId);
+                if (currentPrice) {
+                    currentPrice.innerHTML = price;
+                    inputPrice.value = parseFloat(price) + 1;
+                    currentUser.innerHTML = username;
+                    currentPriceName.innerText = "Current price";
+                    bidBy.innerText = "Bid by:";
+                }
             };
             // Start the connection.
             $.connection.hub.start()

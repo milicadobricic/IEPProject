@@ -37,6 +37,11 @@ namespace IEPProject.Controllers
             return View();
         }
 
+        public ActionResult Error()
+        {
+            return View("Error");
+        }
+
         public ActionResult Parameters()
         {
             ViewBag.Currencies = db.Currencies.Select(c => c.Name).ToList();

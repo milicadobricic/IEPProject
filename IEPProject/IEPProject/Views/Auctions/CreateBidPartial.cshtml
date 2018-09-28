@@ -10,7 +10,7 @@
 
     <div>
         <div>
-            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @Value = ViewBag.Price.ToString(), @class = "form-control text-center" } })
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @Value = ViewBag.Price.ToString(), @class = "form-control text-center", id="input_price_" + ViewBag.AuctionId } })
             @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
 
             @if (!string.IsNullOrEmpty(ViewBag.MessageStatus) && ViewBag.AuctionId == ViewBag.ErrorAuction)
