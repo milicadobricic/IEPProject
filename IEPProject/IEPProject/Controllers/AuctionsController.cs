@@ -15,6 +15,8 @@ using System.IO;
 using IEPProject.Utilities;
 using System.Web.Helpers;
 using LinqKit;
+using Microsoft.AspNet.SignalR;
+using IEPProject.Hubs;
 
 namespace IEPProject.Controllers
 {
@@ -239,6 +241,10 @@ namespace IEPProject.Controllers
             user.NumTokens -= model.Price;
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
+
+            var context = GlobalHost.ConnectionManager.GetHubContext<PriceChangeHub>();
+            context.Clients.All.updatePrice(auction.Id.ToString(), model.Price.ToString(), user.UserName.ToString());
+
             return RedirectToAction("Details", new { id = auction.Id });
         }
 

@@ -18,6 +18,8 @@ namespace IEPProject.Controllers
 
         public ActionResult Index()
         {
+            var ctx = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<Hubs.PriceChangeHub>();
+            ctx.Clients.All.addNewMessageToPage("abc", "def", "ghi");
             return View();
         }
 
@@ -85,6 +87,11 @@ namespace IEPProject.Controllers
             db.SaveChanges();
 
             return RedirectToAction("Index", "Manage");
+        }
+
+        public ActionResult Chat()
+        {
+            return View();
         }
     }
 }
