@@ -64,7 +64,7 @@ namespace IEPProject.Data_Models
         [Required]
         public AuctionState State { get; set; }
 
-        public ApplicationUser Creator { get; set; }
+        public virtual ApplicationUser Creator { get; set; }
 
         public virtual List<Bid> Bids { get; set; } = new List<Bid>();
     }
