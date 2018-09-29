@@ -16,18 +16,22 @@ namespace IEPProject.Data_Models
         public virtual ApplicationUser User { get; set; }
 
         [Required]
+        [Display (Name = "Number of tokens")]
         public int NumTokens { get; set; }
 
         [Required]
+        [Display (Name = "State of order")]
         public OrderState State { get; set; }
         
         [Required]
         [DataType(DataType.DateTime)]
+        [Display (Name = "Time of submittion")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime SubmittionTime { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Time of completion")]
         public DateTime? CompletionTime { get; set; }
     }
 }

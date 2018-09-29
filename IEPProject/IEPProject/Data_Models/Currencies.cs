@@ -24,6 +24,7 @@ namespace IEPProject.Data_Models
         public string Name { get; set; }
 
         [Required]
+        [Display(Name = "Value of 1 token")]
         public double Value { get; set; }
     }
 }

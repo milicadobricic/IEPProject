@@ -1,0 +1,79 @@
+﻿@model IEnumerable<IEPProject.Data_Models.Order>
+
+@{
+    ViewBag.Title = "Orders";
+}
+
+<h2>Orders</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NumTokens)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.State)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubmittionTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompletionTime)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.State == IEPProject.Data_Models.OrderState.CANCELED)
+        {
+            <tr class="danger">
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumTokens)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubmittionTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompletionTime)
+                </td>
+            </tr>
+        }
+        if (item.State == IEPProject.Data_Models.OrderState.SUBMITTED)
+        {
+            <tr class="warning">
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumTokens)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubmittionTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompletionTime)
+                </td>
+            </tr>
+        }
+        if (item.State == IEPProject.Data_Models.OrderState.COMPLETED)
+        {
+            <tr class="success">
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumTokens)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubmittionTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompletionTime)
+                </td>
+            </tr>
+        }
+    }
+</table>

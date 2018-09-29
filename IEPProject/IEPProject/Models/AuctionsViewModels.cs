@@ -25,6 +25,9 @@ namespace IEPProject.Models
         [Required]
         [Display(Name = "Start price")]
         public double StartPrice { get; set; }
+
+        [Display(Name = "Currency")]
+        public string CurrencyName { get; set; }
     }
 
     public class CreateBid

@@ -18,7 +18,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Auction.Name)
+                @Html.ActionLink(item.Auction.Name, "Details", "Auctions", new { id = item.Auction.Id }, new { })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Time)

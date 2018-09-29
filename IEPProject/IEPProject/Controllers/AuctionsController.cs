@@ -99,7 +99,7 @@ namespace IEPProject.Controllers
         public ActionResult Create()
         {
             var parameters = db.Parameters.First();
-            var model = new CreateAuction { Duration = parameters.D };
+            var model = new CreateAuction { Duration = parameters.D, CurrencyName = parameters.C };
             return View(model);
         }
 
@@ -112,6 +112,10 @@ namespace IEPProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                var currencyName = db.Parameters.First().C;
+                var currencyValue = db.Currencies.Where(c => c.Name == currencyName).First().Value;
+                auction.StartPrice /= currencyValue;
+
                 var imagePath = string.Concat("~/Images/", FileNameGenerator.generate());
                 var path = Server.MapPath(imagePath);
                 var userId = User.Identity.GetUserId();

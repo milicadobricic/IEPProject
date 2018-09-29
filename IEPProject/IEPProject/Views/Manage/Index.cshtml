@@ -60,6 +60,10 @@
         <div>
             @Html.ActionLink("Buy platinum package!", "BuyTokens", new { type = PackageType.PLATINUM }, new { @class = "btn btn-default platinum-background" })
         </div>
+        <br />
+        <div>
+            @Html.ActionLink("View order history", "Orders", new { username = Model.Username }, new { @class = "btn btn-default" })
+        </div>
         <hr />
         <p>
             @Html.ActionLink("Change user information", "Change", new { area = "" }, new { @class = "btn btn-default" })

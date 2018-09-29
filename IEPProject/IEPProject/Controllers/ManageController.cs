@@ -86,6 +86,11 @@ namespace IEPProject.Controllers
             return View(model);
         }
 
+        public ActionResult Orders(string username)
+        {
+            return View(db.Orders.Where(o => o.User.UserName == username).OrderByDescending(o => o.SubmittionTime).ToList());
+        }
+
         //
         // POST: /Manage/RemoveLogin
         [HttpPost]
