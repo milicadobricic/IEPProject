@@ -4,7 +4,7 @@
     ViewBag.Title = "CreateBidPartial";
 }
 
-@using (Html.BeginForm("CreateBid", "Auctions", FormMethod.Post, new { @class = "form-inline justify-content-center" }))
+@using (Html.BeginForm("CreateBid", "Auctions", FormMethod.Post, new { @class = "form-inline justify-content-center", id="bid_form_" + ViewBag.AuctionId }))
 {
     @Html.AntiForgeryToken()
 

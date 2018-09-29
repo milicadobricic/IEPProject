@@ -41,20 +41,37 @@
         }
 
         function updateTime() {
-            var endDateString = document.getElementById("closing_time_@Model.Id").innerHTML.trim();;
+            id = @Model.Id;
+            var endDateString = document.getElementById("closing_time_" + id).innerHTML.trim();;
+            var displayDiv = document.getElementById("remaining_time_" + id);
+            var currentPrice = document.getElementById("current_price_name_" + id);
+            var bidBy = document.getElementById("bid_by_" + id);
+            var bidForm = document.getElementById("bid_form_" + id);
+
             var endDate = Date.parse(endDateString);
             var now = Date.now().valueOf();
             var remaining = Math.floor((endDate - now) / 1000);
-            var hours = Math.floor(remaining / 3600);
-            var minutes = Math.floor((remaining % 3600) / 60);
-            var seconds = remaining % 60;
 
-            var displayString = "" + formatLeadingZeros(hours) + ":" + formatLeadingZeros(minutes) + ":" + formatLeadingZeros(seconds);
-            var displayDiv = document.getElementById("remaining_time_@Model.Id");
-            displayDiv.innerHTML = displayString;
+            if (remaining > 0) {
+                var hours = Math.floor(remaining / 3600);
+                var minutes = Math.floor((remaining % 3600) / 60);
+                var seconds = remaining % 60;
+
+                var displayString = "" + formatLeadingZeros(hours) + ":" + formatLeadingZeros(minutes) + ":" + formatLeadingZeros(seconds);
+                displayDiv.innerHTML = displayString;
+            }
+            else {
+                displayDiv.classList.add("text-danger");
+                displayDiv.innerHTML = "Auction closed!";
+                currentPrice.innerHTML = "Final price";
+                bidBy.classList.add("text-success");
+                bidBy.innerHTML = "Won by";
+                bidForm.hidden = true;
+            }
         }
 
         $(function () {
+            updateTime();
             setInterval(updateTime, 500);
 
             // Reference the auto-generated proxy for the hub.

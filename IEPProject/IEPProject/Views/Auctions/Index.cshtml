@@ -41,6 +41,10 @@
     </div>
 </div>
 
+<div id="idList" hidden>
+    @string.Join(",", Model.Select(a => a.Id))
+</div>
+
 @section scripts {
     <!--Script references. -->
     <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
@@ -50,7 +54,58 @@
     <script src="~/signalr/hubs"></script>
     <!--SignalR script to update the chat page and send messages.-->
     <script>
+        function formatLeadingZeros(x) {
+            if (x < 10)
+                return "0" + x;
+            return "" + x;
+        }
+
+        function updateTime() {
+            var idList = document.getElementById("idList").innerHTML.trim().split(",");
+
+            for (index in idList) {
+                var id = idList[index];
+
+                var endDateString = document.getElementById("closing_time_" + id).innerHTML.trim();;
+                var displayDiv = document.getElementById("remaining_time_" + id);
+                var currentPrice = document.getElementById("current_price_name_" + id);
+                var bidBy = document.getElementById("bid_by_" + id);
+                var bidForm = document.getElementById("bid_form_" + id);
+
+                var endDate = Date.parse(endDateString);
+                var now = Date.now().valueOf();
+                var remaining = Math.floor((endDate - now) / 1000);
+
+                if (remaining > 0) {
+                    var hours = Math.floor(remaining / 3600);
+                    var minutes = Math.floor((remaining % 3600) / 60);
+                    var seconds = remaining % 60;
+
+                    var displayString = "" + formatLeadingZeros(hours) + ":" + formatLeadingZeros(minutes) + ":" + formatLeadingZeros(seconds);
+                    displayDiv.innerHTML = displayString;
+                }
+                else {
+                    var currentPriceDiv = document.getElementById("current_price_" + id);
+                    if (currentPriceDiv.innerHTML.trim() === "No bids yet!") {
+                        displayDiv.classList.add("text-warning");
+                        displayDiv.innerHTML = "Auction expired!";
+                    }
+                    else {
+                        displayDiv.classList.add("text-danger");
+                        displayDiv.innerHTML = "Auction closed!";
+                        currentPrice.innerHTML = "Final price";
+                        bidBy.classList.add("text-success");
+                        bidBy.innerHTML = "Won by";
+                    }
+
+                    bidForm.hidden = true;
+                }
+            }
+        }
+
         $(function () {
+            updateTime();
+            setInterval(updateTime, 500);
             // Reference the auto-generated proxy for the hub.
             var chat = $.connection.priceChangeHub;
             // Create a function that the hub can call back to display messages.

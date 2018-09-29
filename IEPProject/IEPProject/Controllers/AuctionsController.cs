@@ -33,7 +33,15 @@ namespace IEPProject.Controllers
                 ViewBag.ErrorAuction = errorAuction;
             }
 
-            return View(db.Auctions.Where(a => a.State == AuctionState.OPENED).ToList());
+            var ret = db.Auctions.Where(a => a.State == AuctionState.OPENED).ToList();
+
+            foreach (var entry in ret)
+            {
+                // db.Entry(entry).State = EntityState.Detached;
+                entry.ClosingTime = entry.ClosingTime.Value.ToUniversalTime();
+            }
+
+            return View(ret);
         }
 
         [HttpPost]
@@ -92,6 +100,8 @@ namespace IEPProject.Controllers
             {
                 return HttpNotFound();
             }
+
+            // db.Entry(auction).State = EntityState.Detached;
 
             auction.ClosingTime = auction.ClosingTime.Value.ToUniversalTime();
             return View(auction);
