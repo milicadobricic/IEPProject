@@ -34,7 +34,29 @@
     <script src="~/signalr/hubs"></script>
     <!--SignalR script to update the chat page and send messages.-->
     <script>
+        function formatLeadingZeros(x) {
+            if (x < 10)
+                return "0" + x;
+            return "" + x;
+        }
+
+        function updateTime() {
+            var endDateString = document.getElementById("closing_time_@Model.Id").innerHTML.trim();;
+            var endDate = Date.parse(endDateString);
+            var now = Date.now().valueOf();
+            var remaining = Math.floor((endDate - now) / 1000);
+            var hours = Math.floor(remaining / 3600);
+            var minutes = Math.floor((remaining % 3600) / 60);
+            var seconds = remaining % 60;
+
+            var displayString = "" + formatLeadingZeros(hours) + ":" + formatLeadingZeros(minutes) + ":" + formatLeadingZeros(seconds);
+            var displayDiv = document.getElementById("remaining_time_@Model.Id");
+            displayDiv.innerHTML = displayString;
+        }
+
         $(function () {
+            setInterval(updateTime, 500);
+
             // Reference the auto-generated proxy for the hub.
             var chat = $.connection.priceChangeHub;
             // Create a function that the hub can call back to display messages.

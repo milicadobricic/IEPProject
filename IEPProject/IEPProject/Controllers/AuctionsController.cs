@@ -92,6 +92,8 @@ namespace IEPProject.Controllers
             {
                 return HttpNotFound();
             }
+
+            auction.ClosingTime = auction.ClosingTime.Value.ToUniversalTime();
             return View(auction);
         }
 

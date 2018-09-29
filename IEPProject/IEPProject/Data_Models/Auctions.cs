@@ -51,13 +51,14 @@ namespace IEPProject.Data_Models
 
         [Required]
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime CreationTime { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime? OpeningTime { get; set; }
 
         [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-ddTHH:mmZ}", ApplyFormatInEditMode = true)]
         public DateTime? ClosingTime { get; set; }
 
         [Required]
