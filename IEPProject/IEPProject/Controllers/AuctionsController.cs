@@ -33,6 +33,12 @@ namespace IEPProject.Controllers
             ViewBag.MaxPrice = model.MaxPrice;
             ViewBag.State = model.State;
 
+            if (errorAuction != null)
+            {
+                ViewBag.MessageStatus = messageStatus;
+                ViewBag.ErrorAuction = errorAuction;
+            }
+
             if (model != null)
             {
                 IQueryable<Auction> ret = db.Auctions;
@@ -73,7 +79,7 @@ namespace IEPProject.Controllers
                     entry.ClosingTime = entry.ClosingTime.Value.ToUniversalTime();
                 }
 
-                ret = ret.OrderBy(a => a.ClosingTime);
+                ret = ret.OrderByDescending(a => a.ClosingTime);
 
                 var pageSize = 3 * numOfRows;
                 var pageNumber = page ?? 1;
@@ -81,13 +87,7 @@ namespace IEPProject.Controllers
                 return View(ret.ToPagedList(pageNumber, pageSize));
             }
             else {
-                if (errorAuction != null)
-                {
-                    ViewBag.MessageStatus = messageStatus;
-                    ViewBag.ErrorAuction = errorAuction;
-                }
-
-                var ret = db.Auctions.Where(a => a.State == AuctionState.OPENED).ToList();
+                var ret = db.Auctions.Where(a => a.State == AuctionState.OPENED).OrderByDescending(a => a.ClosingTime).ToList();
 
                 foreach (var entry in ret)
                 {
@@ -126,6 +126,7 @@ namespace IEPProject.Controllers
         }
 
         // GET: Auctions/Create
+        [System.Web.Mvc.Authorize]
         public ActionResult Create()
         {
             var parameters = db.Parameters.First();
@@ -138,6 +139,7 @@ namespace IEPProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [System.Web.Mvc.Authorize]
         public ActionResult Create(CreateAuction auction)
         {
             if (ModelState.IsValid && auction.StartPrice > 0)
@@ -169,6 +171,7 @@ namespace IEPProject.Controllers
         }
 
         // GET: Auctions/Edit/5
+        [System.Web.Mvc.Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -188,6 +191,7 @@ namespace IEPProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [System.Web.Mvc.Authorize]
         public ActionResult Edit([Bind(Include = "Id,Name,ImagePath,Duration,StartPrice,CurrentPrice,CreationTime,OpeningTime,ClosingTime,State")] Auction auction)
         {
             if (ModelState.IsValid)
@@ -200,8 +204,14 @@ namespace IEPProject.Controllers
         }
 
         // GET: Auctions/Delete/5
+        [System.Web.Mvc.Authorize]
         public ActionResult Delete(int? id)
         {
+            if (!User.Identity.GetApplicationUser().IsAdmin)
+            {
+                return HttpNotFound();
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -217,8 +227,14 @@ namespace IEPProject.Controllers
         // POST: Auctions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [System.Web.Mvc.Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (!User.Identity.GetApplicationUser().IsAdmin)
+            {
+                return HttpNotFound();
+            }
+
             Auction auction = db.Auctions.Find(id);
             db.Auctions.Remove(auction);
             db.SaveChanges();
@@ -227,10 +243,17 @@ namespace IEPProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [System.Web.Mvc.Authorize]
         public ActionResult CreateBid(CreateBid model)
         {
 
             Auction auction = db.Auctions.Find(model.AuctionId);
+
+            if(auction.State != AuctionState.OPENED)
+            {
+                var status = "You can't bid on auctions that are not opened!";
+                return RedirectToAction(model.ReturnPage, new { id = auction.Id, messageStatus = status, errorAuction = model.AuctionId });
+            }
 
             if (model.Price <= auction.CurrentPrice || model.Price < auction.StartPrice)
             {
