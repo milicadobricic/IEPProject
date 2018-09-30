@@ -19,30 +19,9 @@ namespace IEPProject.Controllers
 
         public ActionResult Index()
         {
-            var ctx = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<Hubs.PriceChangeHub>();
-            ctx.Clients.All.addNewMessageToPage("abc", "def", "ghi");
             return View();
         }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        public ActionResult Error()
-        {
-            return View("Error");
-        }
-
+        
         [Authorize]
         public ActionResult Parameters()
         {
