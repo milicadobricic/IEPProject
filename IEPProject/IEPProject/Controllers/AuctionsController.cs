@@ -140,7 +140,7 @@ namespace IEPProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreateAuction auction)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && auction.StartPrice > 0)
             {
                 var currencyName = db.Parameters.First().C;
                 var currencyValue = db.Currencies.Where(c => c.Name == currencyName).First().Value;
@@ -158,6 +158,11 @@ namespace IEPProject.Controllers
                 db.Auctions.Add(auctionModel);
                 db.SaveChanges();
                 return RedirectToAction("Index");
+            }
+
+            if (auction.StartPrice <= 0)
+            {
+                ViewBag.ErrorMessage = "Start price must be greater than 0!";
             }
 
             return View(auction);
