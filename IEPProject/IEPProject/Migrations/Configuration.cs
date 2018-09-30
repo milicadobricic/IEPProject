@@ -29,11 +29,11 @@ namespace IEPProject.Migrations
             //    );
             //
 
-            /*context.Parameters.AddOrUpdate(
+            context.Parameters.AddOrUpdate(
                 new Data_Models.PortalParameters { N = 3, D = 1000, S = 30, G = 50, P = 100, C = "EUR"}
-            );*/
+            );
 
-            /*context.Currencies.AddOrUpdate(
+            context.Currencies.AddOrUpdate(
                 c => c.Name,
                 new Currency("Australia Dollar (AUD)"),
                 new Currency("Great Britain Pound (GBP)"),
@@ -212,7 +212,7 @@ namespace IEPProject.Migrations
                 new Currency("Yemen Rial (YER)"),
                 new Currency("Zambia Kwacha (ZMK)"),
                 new Currency("Zimbabwe Dollar (ZWD)")                
-            );*/
+            );
         }
     }
 }
