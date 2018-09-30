@@ -292,11 +292,11 @@ namespace IEPProject.Controllers
             var previous = db.Bids.Where(b => b.Auction.Id == auction.Id).Where(b => b.State == BidState.CURRENTLY_BEST).FirstOrDefault();
             var previousUser = previous?.User;
 
-            /*if(userId == auction.Creator.Id)
+            if(userId == auction.Creator.Id)
             {
                 var status = "You can't participate in your own auction!";
                 return RedirectToAction(model.ReturnPage, new { id = auction.Id, messageStatus = status, errorAuction = model.AuctionId });
-            }*/
+            }
 
             if (user.NumTokens < model.Price)
             {
@@ -315,11 +315,11 @@ namespace IEPProject.Controllers
 
             if (previous != null)
             {
-                /*if(previousUser.Id == userId)
+                if(previousUser.Id == userId)
                 {
                     var status = "Your previous offer is currently the biggest!";
                     return RedirectToAction(model.ReturnPage, new { id = auction.Id, messageStatus = status, errorAuction = model.AuctionId });
-                }*/
+                }
 
                 previousUser.NumTokens += previous.OfferedPrice;
                 db.Entry(previousUser).State = EntityState.Modified;
