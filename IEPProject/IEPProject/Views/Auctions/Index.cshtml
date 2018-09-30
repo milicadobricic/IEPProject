@@ -3,18 +3,28 @@
 @model PagedList.IPagedList<IEPProject.Data_Models.Auction>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Auctions";
     ViewBag.ReturnPage = "Index";
 }
 
-<div class="btn btn-default">
+<br />
+
+<div class="col-md-2 col-md-offset-5 btn btn-default">
     @Html.ActionLink("Create New", "Create")
 </div>
+
+<br />
+
+<hr />
 
 @{
     var m = new IEPProject.Models.SearchAuctions();
 }
-@Html.Partial("SearchPartial", m)
+<div class="centered">
+    @Html.Partial("SearchPartial", m)
+</div>
+
+<hr />
 
 <div class="container text-center">
     @for (var i = 0; i < Model.Count() / 3; i++)
