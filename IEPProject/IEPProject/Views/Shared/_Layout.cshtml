@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using IEPProject.Utilities;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -25,8 +26,11 @@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.ActionLink("Auctions", "Index", "Auctions")</li>
-                    <li>@Html.ActionLink("Approve", "Approve", "Auctions")</li>
-                    <li>@Html.ActionLink("Portal parameters", "Parameters", "Home")</li>
+                    @if (User.Identity.IsAuthenticated && User.Identity.GetApplicationUser().IsAdmin)
+                    {
+                        <li>@Html.ActionLink("Approve", "Approve", "Auctions")</li>
+                        <li>@Html.ActionLink("Portal parameters", "Parameters", "Home")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

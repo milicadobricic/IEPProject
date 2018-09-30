@@ -286,15 +286,27 @@ namespace IEPProject.Controllers
             return RedirectToAction("Details", new { id = auction.Id });
         }
 
+        [System.Web.Mvc.Authorize]
         public ActionResult Approve()
         {
+            if (!User.Identity.GetApplicationUser().IsAdmin)
+            {
+                return HttpNotFound();
+            }
+
             return View(db.Auctions.Where(a => a.State == AuctionState.READY).ToList());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [System.Web.Mvc.Authorize]
         public ActionResult Approve(ApproveAuction model)
         {
+            if (!User.Identity.GetApplicationUser().IsAdmin)
+            {
+                return HttpNotFound();
+            }
+
             var auction = db.Auctions.Find(model.AuctionId);
             auction.State = AuctionState.OPENED;
             var now = DateTime.Now;

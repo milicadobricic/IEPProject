@@ -291,6 +291,10 @@
     <Compile Include="Migrations\201809272022542_OrdersAdded.Designer.cs">
       <DependentUpon>201809272022542_OrdersAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809300126215_IsAdminMigration.cs" />
+    <Compile Include="Migrations\201809300126215_IsAdminMigration.Designer.cs">
+      <DependentUpon>201809300126215_IsAdminMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AuctionsViewModels.cs" />
@@ -298,6 +302,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\FileNameGenerator.cs" />
     <Compile Include="Utilities\MailSender.cs" />
   </ItemGroup>
@@ -418,6 +423,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809272022542_OrdersAdded.resx">
       <DependentUpon>201809272022542_OrdersAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809300126215_IsAdminMigration.resx">
+      <DependentUpon>201809300126215_IsAdminMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

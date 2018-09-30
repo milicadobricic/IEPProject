@@ -43,17 +43,29 @@ namespace IEPProject.Controllers
             return View("Error");
         }
 
+        [Authorize]
         public ActionResult Parameters()
         {
+            if (!User.Identity.GetApplicationUser().IsAdmin)
+            {
+                return HttpNotFound();
+            }
+
             ViewBag.Currencies = db.Currencies.Select(c => c.Name).ToList();
             return View(db.Parameters.First());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Parameters(PortalParameters model)
         {
-            if(!(model.S < model.G && model.G < model.P))
+            if (!User.Identity.GetApplicationUser().IsAdmin)
+            {
+                return HttpNotFound();
+            }
+
+            if (!(model.S < model.G && model.G < model.P))
             {
                 ViewBag.Currencies = db.Currencies.Select(c => c.Name).ToList();
                 ViewBag.StatusMessage = "S < G < P must hold";
@@ -64,15 +76,27 @@ namespace IEPProject.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public ActionResult Currencies()
         {
+            if (!User.Identity.GetApplicationUser().IsAdmin)
+            {
+                return HttpNotFound();
+            }
+
             return View(db.Currencies.OrderBy(c => c.Name).ToList());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Currencies(Currency model)
         {
+            if (!User.Identity.GetApplicationUser().IsAdmin)
+            {
+                return HttpNotFound();
+            }
+
             db.Entry(model).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Parameters");

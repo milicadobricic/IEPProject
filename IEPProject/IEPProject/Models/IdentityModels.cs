@@ -14,6 +14,7 @@ namespace IEPProject.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public double NumTokens { get; set; }
+        public bool IsAdmin { get; set; }
         public virtual IEnumerable<Bid> Bids { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
