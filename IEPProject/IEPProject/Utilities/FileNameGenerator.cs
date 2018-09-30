@@ -7,11 +7,9 @@ namespace IEPProject.Utilities
 {
     public static class FileNameGenerator
     {
-        private static int counter = 0;
-
         public static string generate()
         {
-            return string.Concat("file_", (++counter).ToString());
+            return string.Concat("file_", DateTime.Now.Ticks.ToString());
         }
     }
 }

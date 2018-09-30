@@ -75,8 +75,10 @@ namespace IEPProject.Controllers
 
                 foreach (var entry in ret)
                 {
-                    // db.Entry(entry).State = EntityState.Detached;
-                    entry.ClosingTime = entry.ClosingTime.Value.ToUniversalTime();
+                    if (entry.ClosingTime.HasValue)
+                    {
+                        entry.ClosingTime = entry.ClosingTime.Value.ToUniversalTime();
+                    }
                 }
 
                 ret = ret.OrderByDescending(a => a.ClosingTime);
@@ -91,8 +93,10 @@ namespace IEPProject.Controllers
 
                 foreach (var entry in ret)
                 {
-                    // db.Entry(entry).State = EntityState.Detached;
-                    entry.ClosingTime = entry.ClosingTime.Value.ToUniversalTime();
+                    if (entry.ClosingTime.HasValue)
+                    {
+                        entry.ClosingTime = entry.ClosingTime.Value.ToUniversalTime();
+                    }
                 }
 
                 return View(ret);
@@ -121,7 +125,11 @@ namespace IEPProject.Controllers
 
             // db.Entry(auction).State = EntityState.Detached;
 
-            auction.ClosingTime = auction.ClosingTime.Value.ToUniversalTime();
+            if (auction.ClosingTime.HasValue)
+            {
+                auction.ClosingTime = auction.ClosingTime.Value.ToUniversalTime();
+            }
+
             return View(auction);
         }
 
@@ -148,14 +156,32 @@ namespace IEPProject.Controllers
                 var currencyValue = db.Currencies.Where(c => c.Name == currencyName).First().Value;
                 auction.StartPrice /= currencyValue;
 
-                var imagePath = string.Concat("~/Images/", FileNameGenerator.generate());
-                var path = Server.MapPath(imagePath);
+                string imagePath;
+                string format;
+
+                if (auction.UploadedPhoto == null)
+                {
+                    imagePath = "~/Images/default-image";
+                    format = ".jpeg";
+                }
+                else
+                {
+                    imagePath = string.Concat("~/Images/", FileNameGenerator.generate());
+                    try {
+                        WebImage img = new WebImage(auction.UploadedPhoto.InputStream);
+                        img.Resize(256, 256, true, true);
+                        format = "." + img.ImageFormat;
+                        var path = Server.MapPath(imagePath);
+                        img.Save(path);
+                    } catch (ArgumentException)
+                    {
+                        ViewBag.ErrorMessage = "Image format not valid";
+                        return View(auction);
+                    }
+                }
                 var userId = User.Identity.GetUserId();
                 var user = db.Users.Find(userId);
-                Auction auctionModel = new Auction(auction, string.Concat(imagePath.Substring(1), ".jpeg"), user);
-                WebImage img = new WebImage(auction.UploadedPhoto.InputStream);
-                img.Resize(256, 256, true, true);
-                img.Save(path);
+                Auction auctionModel = new Auction(auction, string.Concat(imagePath.Substring(1), format), user);
 
                 db.Auctions.Add(auctionModel);
                 db.SaveChanges();

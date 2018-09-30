@@ -49,6 +49,13 @@
             var bidForm = document.getElementById("bid_form_" + id);
 
             var endDate = Date.parse(endDateString);
+
+            if (isNaN(endDate)) {
+                displayDiv.innerHTML = "Auction not started!";
+                bidForm.hidden = true;
+                return;
+            }
+
             var now = Date.now().valueOf();
             var remaining = Math.floor((endDate - now) / 1000);
 

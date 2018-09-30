@@ -72,13 +72,20 @@
             for (index in idList) {
                 var id = idList[index];
 
-                var endDateString = document.getElementById("closing_time_" + id).innerHTML.trim();;
+                var endDateString = document.getElementById("closing_time_" + id).innerHTML.trim();
                 var displayDiv = document.getElementById("remaining_time_" + id);
                 var currentPrice = document.getElementById("current_price_name_" + id);
                 var bidBy = document.getElementById("bid_by_" + id);
                 var bidForm = document.getElementById("bid_form_" + id);
 
                 var endDate = Date.parse(endDateString);
+
+                if (isNaN(endDate)) {
+                    displayDiv.innerHTML = "Auction not started!";
+                    bidForm.hidden = true;
+                    continue;
+                }
+
                 var now = Date.now().valueOf();
                 var remaining = Math.floor((endDate - now) / 1000);
 

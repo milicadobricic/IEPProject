@@ -13,8 +13,7 @@ namespace IEPProject.Models
         [Display(Name = "Name")]
         [StringLength(100)]
         public string Name { get; set; }
-
-        [Required]
+        
         [Display(Name = "Product photo")]
         public HttpPostedFileBase UploadedPhoto { get; set; }
 
