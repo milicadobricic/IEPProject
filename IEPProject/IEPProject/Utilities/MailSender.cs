@@ -9,8 +9,35 @@ namespace IEPProject.Utilities
 {
     public class MailSender
     {
-        public static void SendMail(string email, string subject, string content)
+        public static void SendMail(string email, string firstName, string lastName, bool success, int amount)
         {
+            string subject;
+            string content;
+
+            if (success)
+            {
+                subject = "Yay! You bought " + amount + " tokens!";
+                content = string.Concat(
+                    "Dear ", firstName, " ", lastName, ",\n",
+                    "\n",
+                    "You successfully bought ", amount, " tokens\n",
+                    "\n",
+                    "Best,\n",
+                    "dm150489d\n");
+            }
+            else
+            {
+                subject = "Ooops! Your transaction for " + amount + " tokens failed!";
+                content = string.Concat(
+                    "Dear ", firstName, " ", lastName, ",\n",
+                    "\n",
+                    "Unfortunantely, you transaction for ", amount, " tokens failed.\n",
+                    "Don't be discouraged to try again!\n",
+                    "\n",
+                    "Best,\n",
+                    "dm150489d\n");
+            }
+
             using (var smtpClient = new SmtpClient("smtp.gmail.com", 587))
             {
                 smtpClient.UseDefaultCredentials = true;

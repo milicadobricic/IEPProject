@@ -108,7 +108,7 @@ namespace IEPProject.Controllers
 
             var email = user.Email; 
             var content = MailSender.OrderToString(order, status);
-            MailSender.SendMail(email, subject, content);
+            MailSender.SendMail(email, user.FirstName, user.LastName, status == "success", order.NumTokens);
 
             return RedirectToAction("Index", "Manage");
         }
