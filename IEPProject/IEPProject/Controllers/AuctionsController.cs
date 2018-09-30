@@ -17,6 +17,7 @@ using System.Web.Helpers;
 using LinqKit;
 using Microsoft.AspNet.SignalR;
 using IEPProject.Hubs;
+using PagedList;
 
 namespace IEPProject.Controllers
 {
@@ -25,60 +26,77 @@ namespace IEPProject.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         
         // GET: Auctions
-        public ActionResult Index(int? id, string messageStatus, int? errorAuction)
+        public ActionResult Index(int? id, string messageStatus, int? errorAuction, SearchAuctions model, int? page)
         {
-            if(errorAuction != null)
+            ViewBag.Query = model.Query;
+            ViewBag.MinPrice = model.MinPrice;
+            ViewBag.MaxPrice = model.MaxPrice;
+            ViewBag.State = model.State;
+
+            if (model != null)
             {
-                ViewBag.MessageStatus = messageStatus;
-                ViewBag.ErrorAuction = errorAuction;
-            }
+                IQueryable<Auction> ret = db.Auctions;
 
-            var ret = db.Auctions.Where(a => a.State == AuctionState.OPENED).ToList();
+                var numOfRows = db.Parameters.First().N;
 
-            foreach (var entry in ret)
-            {
-                // db.Entry(entry).State = EntityState.Detached;
-                entry.ClosingTime = entry.ClosingTime.Value.ToUniversalTime();
-            }
-
-            return View(ret);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Index(SearchAuctions model)
-        {
-            IQueryable<Auction> ret = db.Auctions;
-
-            if (!string.IsNullOrWhiteSpace(model.Query))
-            {
-                var parts = model.Query.Split(new[] { ' ', ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-                var predicate = PredicateBuilder.New<Auction>(false);
-                foreach(var part in parts)
+                if (!string.IsNullOrWhiteSpace(model.Query))
                 {
-                    predicate = predicate.Or(p => p.Name.Contains(part));
+                    var parts = model.Query.Split(new[] { ' ', ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                    var predicate = PredicateBuilder.New<Auction>(false);
+                    foreach (var part in parts)
+                    {
+                        predicate = predicate.Or(p => p.Name.Contains(part));
+                    }
+
+                    ret = ret.Where(predicate);
+                    //ret = ret.Where(a => a.Name.Contains(model.Query));
                 }
 
-                ret = ret.Where(predicate);
-                //ret = ret.Where(a => a.Name.Contains(model.Query));
-            }
-            
-            if(model.MinPrice != null)
-            {
-                ret = ret.Where(a => a.CurrentPrice >= model.MinPrice);
-            }
+                if (model.MinPrice != null)
+                {
+                    ret = ret.Where(a => a.CurrentPrice >= model.MinPrice);
+                }
 
-            if (model.MaxPrice != null)
-            {
-                ret = ret.Where(a => a.CurrentPrice <= model.MaxPrice);
-            }
+                if (model.MaxPrice != null)
+                {
+                    ret = ret.Where(a => a.CurrentPrice <= model.MaxPrice);
+                }
 
-            if (model.State != null)
-            {
-                ret = ret.Where(a => a.State == model.State);
-            }
+                if (model.State != null)
+                {
+                    ret = ret.Where(a => a.State == model.State);
+                }
 
-            return View(ret.ToList());
+                foreach (var entry in ret)
+                {
+                    // db.Entry(entry).State = EntityState.Detached;
+                    entry.ClosingTime = entry.ClosingTime.Value.ToUniversalTime();
+                }
+
+                ret = ret.OrderBy(a => a.ClosingTime);
+
+                var pageSize = 3 * numOfRows;
+                var pageNumber = page ?? 1;
+
+                return View(ret.ToPagedList(pageNumber, pageSize));
+            }
+            else {
+                if (errorAuction != null)
+                {
+                    ViewBag.MessageStatus = messageStatus;
+                    ViewBag.ErrorAuction = errorAuction;
+                }
+
+                var ret = db.Auctions.Where(a => a.State == AuctionState.OPENED).ToList();
+
+                foreach (var entry in ret)
+                {
+                    // db.Entry(entry).State = EntityState.Detached;
+                    entry.ClosingTime = entry.ClosingTime.Value.ToUniversalTime();
+                }
+
+                return View(ret);
+            }
         }
 
         // GET: Auctions/Details/5

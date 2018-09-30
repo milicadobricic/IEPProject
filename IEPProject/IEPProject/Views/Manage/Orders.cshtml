@@ -1,4 +1,6 @@
-﻿@model IEnumerable<IEPProject.Data_Models.Order>
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<IEPProject.Data_Models.Order>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Orders";
@@ -9,16 +11,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.NumTokens)
+            Number of tokens
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.State)
+            State of order
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SubmittionTime)
+            Time of sumbittion
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CompletionTime)
+            Time of completion
         </th>
     </tr>
 
@@ -77,3 +79,5 @@
         }
     }
 </table>
+
+@Html.PagedListPager(Model, page => Url.Action("Orders", new { page, username = ViewBag.Username}))

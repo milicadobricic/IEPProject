@@ -10,6 +10,7 @@ using IEPProject.Models;
 using IEPProject.Data_Models;
 using System.Collections.Generic;
 using System.Data.Entity;
+using PagedList;
 
 namespace IEPProject.Controllers
 {
@@ -86,9 +87,16 @@ namespace IEPProject.Controllers
             return View(model);
         }
 
-        public ActionResult Orders(string username)
+        public ActionResult Orders(string username, int? page)
         {
-            return View(db.Orders.Where(o => o.User.UserName == username).OrderByDescending(o => o.SubmittionTime).ToList());
+            var ret = db.Orders.Where(o => o.User.UserName == username).OrderByDescending(o => o.SubmittionTime);
+
+            var pageSize = 5;
+            var pageNumber = page ?? 1;
+
+            ViewBag.Username = username;
+
+            return View(ret.ToPagedList(pageNumber, pageSize));
         }
 
         //

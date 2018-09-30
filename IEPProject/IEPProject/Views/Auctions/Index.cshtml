@@ -1,4 +1,6 @@
-﻿@model List<IEPProject.Data_Models.Auction>
+﻿@using PagedList.Mvc;
+@using IEPProject.Models;
+@model PagedList.IPagedList<IEPProject.Data_Models.Auction>
 
 @{
     ViewBag.Title = "Index";
@@ -17,7 +19,7 @@
 @Html.Partial("SearchPartial", m)
 
 <div class="container text-center">
-    @for (var i = 0; i < Model.Count / 3; i++)
+    @for (var i = 0; i < Model.Count() / 3; i++)
     {
         <div class="row">
             <div class="col-md-4">
@@ -32,13 +34,17 @@
         </div>
     }
     <div class="row">
-        @for (var i = 0; i < Model.Count % 3; i++)
+        @for (var i = 0; i < Model.Count() % 3; i++)
         {
             <div class="col-md-4">
-                @Html.Partial("DetailsPartial", Model[Model.Count - Model.Count % 3 + i])
+                @Html.Partial("DetailsPartial", Model[Model.Count() - Model.Count() % 3 + i])
             </div>
         }
     </div>
+</div>
+
+<div>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, Query = ViewBag.Query, MinPrice = ViewBag.MinPrice, MaxPrice = ViewBag.MaxPrice, State = ViewBag.State }))
 </div>
 
 <div id="idList" hidden>

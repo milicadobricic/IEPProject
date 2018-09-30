@@ -1,9 +1,7 @@
 ﻿@model IEPProject.Models.SearchAuctions
 
-@using (Html.BeginForm("Index", "Auctions", FormMethod.Post, new { @class = "form-inline justify-content-center" })) 
-{
-    @Html.AntiForgeryToken()
-    
+@using (Html.BeginForm("Index", "Auctions", FormMethod.Get, new { @class = "form-inline justify-content-center" })) 
+{    
     <div class="form-horizontal">
         <h4>SearchAuctions</h4>
         <hr />
